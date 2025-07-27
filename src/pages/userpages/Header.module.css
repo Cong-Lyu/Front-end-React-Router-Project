@@ -1,0 +1,50 @@
+.header {
+  height: 160px;
+  color: white;
+  background-image: url('/pictures/app-pictures/headerbackground.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 40%;
+}
+.iconsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.leftContainer {
+  width: 420px;
+  display: flex;
+  justify-content: space-between;
+}
+.homePageContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.icon {
+  color: white;
+  width: 20px;
+  height: 20px;
+}
+.prompt {
+  color: white;
+  text-decoration: none;
+}
+.downloadMobileappContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchButton {
+  padding: 10px 10px;
+  color: black;
+}
+.searchIcon {
+  color: black;
+  height: 20px;
+  width: 20px;
+}
+.rightContainer {
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+}
