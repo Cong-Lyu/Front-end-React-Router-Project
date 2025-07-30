@@ -1,9 +1,9 @@
-import { Form, Link } from "react-router-dom"
+import { Form, Link, redirect } from "react-router-dom"
 import styles from './login.module.css'
 import { useState } from "react"
 
 async function sendToken(email) {
-  const sendEmail = await fetch('http://localhost:5000/api/tokenGenerator', {
+  const sendEmail = await fetch('http://localhost:5000/api/token/tokenGenerator', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -12,14 +12,43 @@ async function sendToken(email) {
       'email': email
     })
   })
-  const result = await sendEmail.text()
+  const result = await sendEmail.json()
+  return result['sendTokenStatus']
+}
+
+async function compToken(email, inputToken) {
+  const logInStatus = await fetch('http://localhost:5000/api/token/compareToken', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      'email': email,
+      'userInputToken': inputToken
+    })
+  })
+  const result = await logInStatus.json()
+  return result['logInStatus']
 }
 
 export async function action({request}) {
   const event = await request.formData()
   const buttonType = event.get('button')
   if(buttonType === 'tokenFunction') {
-    sendToken(event.get('email'))
+    const status = await sendToken(event.get('email'))
+    console.log('token status:', status)
+  }
+  else if(buttonType === 'logInWithToken') {
+    const userInputToken = event.get('tokenInput')
+    const logInStatus = await compToken(event.get('email'), userInputToken)
+    console.log('log in status:', logInStatus)
+    if(logInStatus) {
+      console.log('我走了')
+      throw redirect('/vip')
+    }
+    else {
+      console.log('Token Wrong!')
+    }
   }
 }
 
@@ -50,7 +79,7 @@ export function Login() {
               login with Email token
             </button>
           </div>
-          <Form className={styles.formContainer}>
+          <Form method="post" className={styles.formContainer}>
             <div style={{borderBottom: 'none', borderBottomRightRadius: '0', borderBottomLeftRadius: '0'}} className={styles.inputContainer}>
               <p className={styles.inputPrompt}>{logInOption ? 'username' : 'email'}</p>
               <input className={styles.input} name='email' placeholder={logInOption ? 'your email address' : 'your email'}/>
@@ -61,7 +90,7 @@ export function Login() {
               {logInOption || <button formMethod="POST" type="submit" name='button' value='tokenFunction' className={styles.tokenButton}>get token</button>}
             </div>
             <div style={{marginBottom: '20px'}} className={styles.formButtonsContainer}>
-              <button type="button" onClick={() => {setLogInOption(false)}} className={styles.signUp}>sign up</button>
+              <button type={logInOption ? 'button' : 'submit'} onClick={logInOption ? (event) => {event.preventDefault(); setLogInOption(false)} : undefined} name="button" value='logInWithToken' className={styles.signUp}>sign up</button>
               {logInOption && <button type="submit" className={styles.logIn}>go!</button>}
             </div>
           </Form>
