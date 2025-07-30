@@ -2,6 +2,11 @@ import { Form, Link, redirect } from "react-router-dom"
 import styles from './login.module.css'
 import { useState } from "react"
 
+function saveTokenToLocalStor(email, token) {
+  const record = JSON.stringify({'userName': email, 'user-token': token})
+  localStorage.setItem('latestUser', record)
+}
+
 async function sendToken(email) {
   const sendEmail = await fetch('http://localhost:5000/api/token/tokenGenerator', {
     method: 'POST',
@@ -28,7 +33,7 @@ async function compToken(email, inputToken) {
     })
   })
   const result = await logInStatus.json()
-  return result['logInStatus']
+  return result
 }
 
 export async function action({request}) {
@@ -41,8 +46,9 @@ export async function action({request}) {
   else if(buttonType === 'logInWithToken') {
     const userInputToken = event.get('tokenInput')
     const logInStatus = await compToken(event.get('email'), userInputToken)
-    console.log('log in status:', logInStatus)
+    console.log('log in status:', logInStatus['logInStatus'])
     if(logInStatus) {
+      saveTokenToLocalStor(event.get('email'), logInStatus['user-token'])
       console.log('我走了')
       throw redirect('/vip')
     }
