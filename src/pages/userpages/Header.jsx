@@ -1,5 +1,5 @@
 import styles from './Header.module.css'
-import { Form, Link, redirect } from 'react-router-dom'
+import { Form, Link, Outlet, redirect } from 'react-router-dom'
 import { 
   AcademicCapIcon, 
   ArrowDownTrayIcon, 
@@ -59,7 +59,7 @@ export function Header() {
           <div className={styles.rightContainer}>
             <button className={styles.logInButton}>log in</button>
             <div className={styles.subContainer}>
-              <Link to='/vip'>
+              <Link to='vip'>
                 <GiftIcon className={styles.icon}/>
               </Link>
             </div>
@@ -95,6 +95,7 @@ export function Header() {
           </div>
         </div>
       </header>
+      <Outlet />
     </>
   )
 }
