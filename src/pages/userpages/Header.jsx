@@ -1,5 +1,5 @@
 import styles from './Header.module.css'
-import { Form, Link, redirect } from 'react-router-dom'
+import { Form, Link, Outlet, redirect } from 'react-router-dom'
 import { 
   AcademicCapIcon, 
   ArrowDownTrayIcon, 
@@ -26,46 +26,40 @@ export function Header() {
       <header className={styles.header}>
         <div className={styles.iconsContainer}>
           <div className={styles.leftContainer}>
-            <div className={styles.homePageContainer}>
-              <Link className={styles.prompt}>
-                <AcademicCapIcon className={styles.icon}/>
-                <p>首页</p>
-              </Link>
-            </div>
-              <Link className={styles.prompt}>
-                <p>直播</p>
-              </Link>
-              <Link className={styles.prompt}>
-                <p>游戏中心</p>
-              </Link>
-              <Link className={styles.prompt}>
-                <p>会员购</p>
-              </Link>
-              <Link className={styles.prompt}>
-                <p>漫画</p>
-              </Link>
-              <Link className={styles.prompt}>
-                <p>赛事</p>
-              </Link>
-            <div className={styles.downloadMobileappContainer}>
-              <Link className={styles.prompt}>
-              <ArrowDownTrayIcon className={styles.icon}/>
-              <p>下载客户端</p>
-              </Link>
-            </div>
+            <Link className={styles.homePageContainer}>
+              <AcademicCapIcon className={styles.icon}/>
+              <p>home</p>
+            </Link>
+            <Link className={styles.prompt}>
+              <p>lives</p>
+            </Link>
+            <Link className={styles.prompt}>
+              <p>games</p>
+            </Link>
+            <Link className={styles.prompt}>
+              <p>vip column</p>
+            </Link>
+            <Link className={styles.prompt}>
+              <p>anime</p>
+            </Link>
+            <Link className={styles.prompt}>
+              <p>gaming</p>
+            </Link>
+            <Link className={styles.downloadMobileappContainer}>
+            <ArrowDownTrayIcon className={styles.icon}/>
+            <p>app download</p>
+            </Link>
           </div>
-          <div className={styles.middleContainer}>
-            <Form>
-              <input className={styles.searchBar} />
-              <button className={styles.searchButton}>
-                <MagnifyingGlassIcon className={styles.searchIcon}/>
-              </button>
-            </Form>
-          </div>
-
+          <Form className={styles.middleContainer}>
+            <input className={styles.searchBar} />
+            <button className={styles.searchButton}>
+              <MagnifyingGlassIcon className={styles.searchIcon}/>
+            </button>
+          </Form>
           <div className={styles.rightContainer}>
+            <button className={styles.logInButton}>log in</button>
             <div className={styles.subContainer}>
-              <Link to='/vip'>
+              <Link to='vip'>
                 <GiftIcon className={styles.icon}/>
               </Link>
             </div>
@@ -94,14 +88,14 @@ export function Header() {
                 <LightBulbIcon className={styles.icon}/>
               </Link>
             </div>
-            <div className={styles.uploadContainer}>
-              <Link>
-                <ArrowUpTrayIcon className={styles.icon}/>
-              </Link>
-            </div>
+            <Link className={styles.uploadContainer}>
+              <ArrowUpTrayIcon className={styles.icon}/>
+              <p>upload</p>
+            </Link>
           </div>
         </div>
       </header>
+      <Outlet />
     </>
   )
 }

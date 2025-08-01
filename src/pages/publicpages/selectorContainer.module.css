@@ -1,0 +1,27 @@
+.selectorContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  column-gap: 8px;
+  height: 66px;
+  flex: 1;
+  min-width: 800px;
+  padding-right: 16px;
+  border-right: solid 1px grey;
+}
+@media (min-width: 1367px) and (max-width: 1400px){
+  .selectorContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 8px;
+    height: 66px;
+    min-width: 761px;
+    max-width: 793px;
+    padding-right: 16px;
+    border-right: solid 1px grey;
+  }
+}
+.option {
+  margin: 0px;
+  text-align: center;
+  line-height: 33px;
+}
