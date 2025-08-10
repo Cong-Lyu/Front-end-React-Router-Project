@@ -14,19 +14,22 @@ import styles from './subHeader.module.css'
 import { SelectorContainer } from './selectorContainer'
 
 export function SubHeader() {
-  const [selectorNum, setSelectorNum] = useState(22)
-  const winWidth = useRef(window.innerWidth)
-  console.log(winWidth)
+  const [selectorNum, setSelectorNum] = useState(18)
+  console.log(selectorNum)
+
   useEffect(() => {
     function handleResize() {
       if(window.innerWidth < 1366) {
-        
+        setSelectorNum(14)
+      }
+      else {
+        setSelectorNum(18)
       }
     }
 
     window.addEventListener('resize', handleResize)
 
-    return window.removeEventListener('resize', handleResize)
+    return () => {window.removeEventListener('resize', handleResize)}
   }, [])
 
   return (
