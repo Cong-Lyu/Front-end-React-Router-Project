@@ -1,0 +1,12 @@
+.main {
+  padding-left: 20px;
+  padding-top: 20px;
+  margin-left: 140px;
+  margin-top: 60px;
+  background-color: grey;
+  height: 1000px;
+}
+.mainContent {
+  height: 1000px;
+  background-color: white;
+}

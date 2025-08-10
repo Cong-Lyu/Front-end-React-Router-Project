@@ -13,12 +13,12 @@ import {
   ArrowUpTrayIcon
 } from '@heroicons/react/24/solid'
 
-export function Loader() {
-  const isLoggedIn = false
-  if(!isLoggedIn) {
-    throw redirect('/login')
-  }
-}
+// export function Loader() {
+//   const isLoggedIn = false
+//   if(!isLoggedIn) {
+//     throw redirect('/login')
+//   }
+// }
 
 export function Header() {
   return (
@@ -84,7 +84,7 @@ export function Header() {
               </Link>
             </div>
             <div className={styles.subContainer}>
-              <Link>
+              <Link to='/creation'>
                 <LightBulbIcon className={styles.icon}/>
               </Link>
             </div>
