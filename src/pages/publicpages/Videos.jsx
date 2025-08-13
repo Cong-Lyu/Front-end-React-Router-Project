@@ -5,22 +5,30 @@ import { useLoaderData, useLocation } from 'react-router-dom'
 export async function loader() {
   const getData = await fetch(`http://localhost:5000/api/public/general?amount=16`)
   const result = await getData.json()
-  return result['pictureList']
+
+  const downloadTokenFetch = await fetch('http://localhost:5000/api/downloadToken')
+  const downloadToken = await downloadTokenFetch.json()
+
+  return [result['pictureList'], downloadToken['downloadUrl'], downloadToken['downloadTempToken']]
 }
 
 export function Videos() {
   const location = useLocation()
   const path = location.pathname
-  let folderName
-  if(path === '/') { folderName = 'homePageVideos/' }
-  const bigPicPath = '../../pictures/video-pictures/big/' + folderName
-  const generalPicPath = '../../pictures/video-pictures/general/' + folderName
-  const bigPic = 'S-torii.jpg'
-
   const firstList = useLoaderData()
-  const [list, setList] = useState(firstList)
+  const downloadUrl = firstList[1]
+  const downloadToken = firstList[2]
+  //-----pictures' names are saved in state.------//
+  const [list, setList] = useState(firstList[0])
   const lastPicName = list[list.length - 1]
   console.log(list, lastPicName)
+  
+  let folderName
+  if(path === '/') { folderName = 'homePageVideos/' }
+  const bigPicPath = downloadUrl + '/big/' + folderName
+  const generalPicPath = downloadUrl + '/general/' + folderName
+  const bigPic = 'S-torii.jpg'
+  console.log(`${generalPicPath}` + list[0] + `?Authorization=${downloadToken}`)
 
   useEffect(() => {
     async function handleScrolling() {
@@ -43,9 +51,9 @@ export function Videos() {
 
   function imgGenerator(start, nums) {
     const picList = []
-    for(let i = start; i < nums + start; i++) {
+    for(let i = start; i < start + nums ; i++) {
       picList.push(<div className={styles.subContainer}>
-        <img className={styles.picture} src={generalPicPath + list[i]} />
+        <img loading="lazy"  className={styles.picture} src={generalPicPath + list[i] + `?Authorization=${downloadToken}`} />
         <p className={styles.description}>This is the description part</p>
       </div>)
     }
@@ -57,7 +65,7 @@ export function Videos() {
       <div className={styles.container}>
         <div className={styles.upContainer}>
           <div className={styles.leftContainer}>
-            <img className={styles.leftPicture} src={bigPicPath + bigPic} />
+            <img className={styles.leftPicture} src={bigPicPath + bigPic + `?Authorization=${downloadToken}`} />
             <div className={styles.navBar}>This is the navi bar</div>
           </div>
           <div className={styles.rightContainer}>
