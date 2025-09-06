@@ -1,24 +1,26 @@
 import { Link, redirect } from 'react-router-dom'
 
 export async function Loader() {
-  const token = JSON.parse(localStorage.getItem('latestUser') || '{}')['user-token']
-  if(token) {
-    const varify = await fetch('http://localhost:5000/api/token/tokenVarify', {
-      method: 'POST',
+  const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
+  const googleJwt = localStorage.getItem('googleJwt')
+  const myJwt = localStorage.getItem('myJwt')
+  try {
+    const varify = await fetch(`${url}/api/jwt/jwtVarify`, {
+      // credentials: 'include',
+      method: 'GET',
       headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        'user-token': token
-      })
+        'X-Google-Jwt': googleJwt,
+        'X-My-Jwt': myJwt
+      }
     })
     const result = await varify.json()
     console.log(result)
-    if(!result['token-status']) {
+    if(!result['status']) {
       throw redirect('/login')
     }
   }
-  else {
+  catch(err) {
+    console.log(err)
     throw redirect('/login')
   }
 }

@@ -26,7 +26,7 @@ export function Header() {
       <header className={styles.header}>
         <div className={styles.iconsContainer}>
           <div className={styles.leftContainer}>
-            <Link className={styles.homePageContainer}>
+            <Link to='/' className={styles.homePageContainer}>
               <AcademicCapIcon className={styles.icon}/>
               <p>home</p>
             </Link>
@@ -46,8 +46,8 @@ export function Header() {
               <p>gaming</p>
             </Link>
             <Link className={styles.downloadMobileappContainer}>
-            <ArrowDownTrayIcon className={styles.icon}/>
-            <p>app download</p>
+              <ArrowDownTrayIcon className={styles.icon}/>
+              <p>app download</p>
             </Link>
           </div>
           <Form className={styles.middleContainer}>
@@ -57,7 +57,7 @@ export function Header() {
             </button>
           </Form>
           <div className={styles.rightContainer}>
-            <button className={styles.logInButton}>log in</button>
+            <Link to='/login' className={styles.logInButton}>log in</Link>
             <div className={styles.subContainer}>
               <Link to='vip'>
                 <GiftIcon className={styles.icon}/>

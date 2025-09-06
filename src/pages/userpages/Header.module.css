@@ -105,6 +105,7 @@
   padding: 10px 4px;
   border-radius: 30px;
   color: white;
+  text-decoration: none;
 }
 .uploadContainer {
   display: flex;

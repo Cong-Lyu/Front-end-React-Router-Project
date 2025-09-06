@@ -1,6 +1,8 @@
 import { Form, Link, redirect } from "react-router-dom"
 import styles from './login.module.css'
 import { useState } from "react"
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { onSuccess, onError } from '../../util/googleLogInEventHandlers.js'
 
 function saveTokenToLocalStor(email, token) {
   const record = JSON.stringify({'userName': email, 'user-token': token})
@@ -8,7 +10,8 @@ function saveTokenToLocalStor(email, token) {
 }
 
 async function sendToken(email) {
-  const sendEmail = await fetch('http://localhost:5000/api/token/tokenGenerator', {
+  const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
+  const sendEmail = await fetch(`${url}/api/token/tokenGenerator`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -22,7 +25,8 @@ async function sendToken(email) {
 }
 
 async function compToken(email, inputToken) {
-  const logInStatus = await fetch('http://localhost:5000/api/token/compareToken', {
+  const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
+  const logInStatus = await fetch(`${url}/api/token/compareToken`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -49,7 +53,6 @@ export async function action({request}) {
     console.log('log in status:', logInStatus['logInStatus'])
     if(logInStatus) {
       saveTokenToLocalStor(event.get('email'), logInStatus['user-token'])
-      console.log('我走了')
       throw redirect('/vip')
     }
     else {
@@ -60,9 +63,10 @@ export async function action({request}) {
 
 export function Login() {
   const [logInOption, setLogInOption] = useState(true)
-
+  
   return (
     <>
+    <Link to='/'>Back to Home</Link>
     <div className={styles.container}>
       <div className={styles.secondContainer}>
         <div className={styles.leftContainer}>
@@ -104,9 +108,10 @@ export function Login() {
             login with other options
           </div>
           <div className={styles.loginOptionContainer2}>
-            <Link className={styles.link}>
-              login with google
-            </Link>
+            <GoogleOAuthProvider clientId="921371467501-6a2oag4udjf0a2u1db7a4n7teuk26q63.apps.googleusercontent.com" locale="en">
+              <GoogleLogin onSuccess={onSuccess} onError={onError}/>
+            </GoogleOAuthProvider>
+            
             <Link className={styles.link}>
               login with facebook
             </Link>
