@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react'
 import { useLoaderData, useLocation } from 'react-router-dom'
 
 export async function loader() {
-  const getData = await fetch(`http://localhost:5000/api/public/general?amount=16`)
+  // const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
+  const url = `http://localhost:5000`
+  const getData = await fetch(`${url}/api/public/general?amount=16`)
   const result = await getData.json()
 
   // const downloadTokenFetch = await fetch('http://localhost:5000/api/downloadToken')
@@ -39,7 +41,8 @@ export function Videos() {
       const currentSize = window.innerHeight
       const totalSize = document.body.scrollHeight
       if(totalSize - passedSize - currentSize < 5) {
-        const getData = await fetch(`http://localhost:5000/api/public/general?amount=10&last=${lastPicName}`)
+        const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
+        const getData = await fetch(`${url}/api/public/general?amount=10&last=${lastPicName}`)
         const result = await getData.json()
         console.log('see!::', result)
         setList([...list, ...result['pictureList']])
