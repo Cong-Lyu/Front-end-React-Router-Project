@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react'
 import { useLoaderData, useLocation } from 'react-router-dom'
 
 export async function loader() {
-  // const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
-  const url = `http://localhost:5000`
+  const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
   const getData = await fetch(`${url}/api/public/general?amount=16`)
   const result = await getData.json()
 
