@@ -6,11 +6,6 @@ export async function loader() {
   const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
   const getData = await fetch(`${url}/api/public/general?amount=16`)
   const result = await getData.json()
-
-  // const downloadTokenFetch = await fetch('http://localhost:5000/api/downloadToken')
-  // const downloadToken = await downloadTokenFetch.json()
-
-  // return [result['pictureList'], downloadToken['downloadUrl'], downloadToken['downloadTempToken']]
   return result['pictureList']
 }
 
@@ -18,21 +13,15 @@ export function Videos() {
   const location = useLocation()
   const path = location.pathname
   const firstList = useLoaderData()
-  // const downloadUrl = firstList[1]
-  // const downloadToken = firstList[2]
-  // //-----pictures' names are saved in state.------//
-  // const [list, setList] = useState(firstList[0])
   const [list, setList] = useState(firstList)
   const lastPicName = list[list.length - 1]
-  console.log(list, lastPicName)
   
-  const downloadUrl = `https://raw.githubusercontent.com/Cong-Lyu/publicFiles/master/pictures/video-pictures`
+  const downloadUrl = `https://shirahama-imgs.s3.ap-southeast-2.amazonaws.com/pictures/video-pictures`
   let folderName
   if(path === '/') { folderName = 'homePageVideos/' }
   const bigPicPath = downloadUrl + '/big/' + folderName
   const generalPicPath = downloadUrl + '/general/' + folderName
   const bigPic = 'S-torii.jpg'
-  console.log(`${generalPicPath}` + list[0])
 
   useEffect(() => {
     async function handleScrolling() {
@@ -43,7 +32,6 @@ export function Videos() {
         const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
         const getData = await fetch(`${url}/api/public/general?amount=10&last=${lastPicName}`)
         const result = await getData.json()
-        console.log('see!::', result)
         setList([...list, ...result['pictureList']])
         window.removeEventListener('scroll', handleScrolling)
       }
@@ -58,7 +46,6 @@ export function Videos() {
     const picList = []
     for(let i = start; i < start + nums ; i++) {
       picList.push(<div className={styles.subContainer}>
-        {/* <img loading="lazy"  className={styles.picture} src={generalPicPath + list[i] + `?Authorization=${downloadToken}`} /> */}
         <img loading="lazy"  className={styles.picture} src={generalPicPath + list[i]} />
         <p className={styles.description}>This is the description part</p>
       </div>)
