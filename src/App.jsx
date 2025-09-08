@@ -8,6 +8,7 @@ import { SubHeader } from './pages/publicpages/subHeader.jsx'
 import { Videos, loader as videoLoader } from './pages/publicpages/Videos.jsx'
 import { CreationLeftBar } from './pages/userpages/creationLeftBar.jsx'
 import { CreationUpload, action as uploadAction, loader as creationLoader } from './pages/userpages/creationUpload.jsx'
+import { VideoPlaying } from './pages/publicpages/VideoPlaying.jsx'
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -15,7 +16,10 @@ function App() {
     <Route path='/' element={<Header />}>
       <Route element={<SubHeader />}>
         <Route index loader={videoLoader} element={<Videos defaultPage={true}/>} />
-        <Route path=':type' loader={videoLoader} element={<Videos defaultPage={false}/>}/>
+        <Route path=':type' loader={videoLoader} element={<Videos defaultPage={false}/>}>
+          <Route path='video' element={<VideoPlaying />} />
+        </Route>
+        <Route path='video' element={<VideoPlaying />} />
       </Route>
 
       <Route path='vip' loader={Loader} element={<Vip />} />
