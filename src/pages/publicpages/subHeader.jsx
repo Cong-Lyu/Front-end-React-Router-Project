@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
 import { 
   FireIcon,
@@ -15,8 +15,8 @@ import { SelectorContainer } from './selectorContainer'
 
 export function SubHeader() {
   const [selectorNum, setSelectorNum] = useState(18)
-  console.log(selectorNum)
-
+  const location = useLocation()
+  const isDisplay = !location.pathname.includes('/video')
   useEffect(() => {
     function handleResize() {
       if(window.innerWidth < 1366) {
@@ -32,6 +32,16 @@ export function SubHeader() {
     return () => {window.removeEventListener('resize', handleResize)}
   }, [])
 
+  return (
+    <>
+      {isDisplay && <SelectorDisplay selectorNum={selectorNum} />}
+      <Outlet />
+    </>
+  )
+}
+
+function SelectorDisplay(props) {
+  const selectorNum = props.selectorNum
   return (
     <>
       <div className={styles.container}>
@@ -55,7 +65,6 @@ export function SubHeader() {
           <div className={styles.rightSubContainer}><MusicalNoteIcon className={styles.rightIcons}/><p>hot songs</p></div>
         </div>
       </div>
-      <Outlet />
     </>
   )
 }

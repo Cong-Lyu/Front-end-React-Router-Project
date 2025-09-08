@@ -1,6 +1,6 @@
 import styles from './Videos.module.css'
 import { useEffect, useState } from 'react'
-import { useLoaderData, useLocation } from 'react-router-dom'
+import { useLoaderData, useLocation, Link, Outlet } from 'react-router-dom'
 
 export async function loader() {
   const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
@@ -12,17 +12,11 @@ export async function loader() {
 export function Videos() {
   const location = useLocation()
   const path = location.pathname
+  const isDisplayList = !path.includes('/video')
   const firstList = useLoaderData()
   const [list, setList] = useState(firstList)
   const lastPicName = list[list.length - 1]
   
-  const downloadUrl = `https://shirahama-imgs.s3.ap-southeast-2.amazonaws.com/pictures/video-pictures`
-  let folderName
-  if(path === '/') { folderName = 'homePageVideos/' }
-  const bigPicPath = downloadUrl + '/big/' + folderName
-  const generalPicPath = downloadUrl + '/general/' + folderName
-  const bigPic = 'S-torii.jpg'
-
   useEffect(() => {
     async function handleScrolling() {
       const passedSize = window.scrollY
@@ -42,23 +36,38 @@ export function Videos() {
     return () => {window.removeEventListener('scroll', handleScrolling)}
   }, [list])
 
+  return (
+    <>
+      {isDisplayList && <VideosDisplay list={list}/>}
+      <Outlet />
+    </>
+  )
+}
+
+function VideosDisplay(props) {
+  const list = props.list
+  const downloadUrl = `https://shirahama-imgs.s3.ap-southeast-2.amazonaws.com/pictures/video-pictures`
+  let folderName = 'homePageVideos/'
+  // if(path === '/') { folderName = 'homePageVideos/' }
+  const bigPicPath = downloadUrl + '/big/' + folderName
+  const generalPicPath = downloadUrl + '/general/' + folderName
+  const bigPic = 'S-torii.jpg'
+
   function imgGenerator(start, nums) {
     const picList = []
     for(let i = start; i < start + nums ; i++) {
-      picList.push(<div className={styles.subContainer}>
+      picList.push(<Link to={`video?videoName=testVideo1`} className={styles.subContainer}>
         <img loading="lazy"  className={styles.picture} src={generalPicPath + list[i]} />
         <p className={styles.description}>This is the description part</p>
-      </div>)
+      </Link>)
     }
     return picList
   }
-
   return (
     <>
       <div className={styles.container}>
         <div className={styles.upContainer}>
           <div className={styles.leftContainer}>
-            {/* <img className={styles.leftPicture} src={bigPicPath + bigPic + `?Authorization=${downloadToken}`} /> */}
             <img className={styles.leftPicture} src={bigPicPath + bigPic} />
             <div className={styles.navBar}>This is the navi bar</div>
           </div>
