@@ -64,7 +64,7 @@ function VipPageElements() {
               <p className={styles.des} >1 month free trial</p>
               <p className={styles.des} style={{marginBottom: '30px'}} >policies apply</p>
               <button className={styles.tryButton2} >Try 1 month for free</button>
-              <Link className={styles.paymentLink} >Pick this option</Link>
+              <Link to={`/premiumPayment?option=${0}`} className={styles.paymentLink} >Pick this option</Link>
             </div>
             <div className={styles.options} >
               <div className={styles.optionSubTitle} ><UserPlusIcon className={styles.icon2} style={{marginRight: '10px'}} />Family-set</div>
@@ -73,7 +73,7 @@ function VipPageElements() {
               <p className={styles.des} >1 month free trial</p>
               <p className={styles.des} style={{marginBottom: '30px'}} >policies apply</p>
               <button className={styles.tryButton2} >Try 1 month for free</button>
-              <Link className={styles.paymentLink} >Pick this option</Link>
+              <Link to={`/premiumPayment?option=${1}`} className={styles.paymentLink} >Pick this option</Link>
             </div>
             <div className={styles.options} >
               <div className={styles.optionSubTitle} ><UserPlusIcon className={styles.icon2} style={{marginRight: '10px'}} />Two-people</div>
@@ -82,7 +82,7 @@ function VipPageElements() {
               <p className={styles.des} >1 month free trial</p>
               <p className={styles.des} style={{marginBottom: '30px'}} >policies apply</p>
               <button className={styles.tryButton2} >Try 1 month for free</button>
-              <Link className={styles.paymentLink} >Pick this option</Link>
+              <Link to={`/premiumPayment?option=${2}`} className={styles.paymentLink} >Pick this option</Link>
             </div>
             <div className={styles.options} >
               <div className={styles.optionSubTitle} ><AcademicCapIcon className={styles.icon2} style={{marginRight: '10px'}} />Student-plan</div>
@@ -91,7 +91,7 @@ function VipPageElements() {
               <p className={styles.des} >1 month free trial</p>
               <p className={styles.des} style={{marginBottom: '30px'}} >policies apply</p>
               <button className={styles.tryButton2} >Try 1 month for free</button>
-              <Link className={styles.paymentLink} >Pick this option</Link>
+              <Link to={`/premiumPayment?option=${3}`} className={styles.paymentLink} >Pick this option</Link>
             </div>
           </div>
         </div>
