@@ -17,9 +17,9 @@ function App() {
       <Route element={<SubHeader />}>
         <Route index loader={videoLoader} element={<Videos defaultPage={true}/>} />
         <Route path=':type' loader={videoLoader} element={<Videos defaultPage={false}/>}>
-          <Route path='video' element={<VideoPlaying />} />
+          <Route path='video' loader={videoLoader} element={<VideoPlaying />} />
         </Route>
-        <Route path='video' element={<VideoPlaying />} />
+        <Route path='video' loader={videoLoader} element={<VideoPlaying />} />
       </Route>
 
       <Route path='vip' loader={Loader} element={<Vip />} />
