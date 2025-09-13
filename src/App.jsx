@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import { Header } from './pages/userpages/Header.jsx'
-import { Login, action as logInAction} from './pages/userpages/login.jsx'
+import { Login } from './pages/userpages/login.jsx'
 import { Vip } from './pages/publicpages/Vip.jsx'
 import { SubHeader } from './pages/publicpages/subHeader.jsx'
 import { Videos, loader as videoLoader } from './pages/publicpages/Videos.jsx'
@@ -26,7 +26,7 @@ function App() {
       <Route path='vip' element={<Vip />} />
     </Route>
     <Route path='premiumPayment' loader={paymentLoader} element={<VipPayment />}/>
-    <Route action={logInAction} path='/login' element={<Login />}/>
+    <Route path='/login' element={<Login />}/>
     <Route element={<CreationLeftBar />}>
       <Route loader={creationLoader} action={uploadAction} path='/creation' element={<CreationUpload />} /> 
     </Route>

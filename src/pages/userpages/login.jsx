@@ -4,63 +4,6 @@ import { useState } from "react"
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { onSuccess, onError } from '../../util/googleLogInEventHandlers.js'
 
-function saveTokenToLocalStor(email, token) {
-  const record = JSON.stringify({'userName': email, 'user-token': token})
-  localStorage.setItem('latestUser', record)
-}
-
-async function sendToken(email) {
-  const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
-  const sendEmail = await fetch(`${url}/api/token/tokenGenerator`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'email': email
-    })
-  })
-  const result = await sendEmail.json()
-  return result['sendTokenStatus']
-}
-
-async function compToken(email, inputToken) {
-  const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
-  const logInStatus = await fetch(`${url}/api/token/compareToken`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'email': email,
-      'userInputToken': inputToken
-    })
-  })
-  const result = await logInStatus.json()
-  return result
-}
-
-export async function action({request}) {
-  const event = await request.formData()
-  const buttonType = event.get('button')
-  if(buttonType === 'tokenFunction') {
-    const status = await sendToken(event.get('email'))
-    console.log('token status:', status)
-  }
-  else if(buttonType === 'logInWithToken') {
-    const userInputToken = event.get('tokenInput')
-    const logInStatus = await compToken(event.get('email'), userInputToken)
-    console.log('log in status:', logInStatus['logInStatus'])
-    if(logInStatus) {
-      saveTokenToLocalStor(event.get('email'), logInStatus['user-token'])
-      throw redirect('/vip')
-    }
-    else {
-      console.log('Token Wrong!')
-    }
-  }
-}
-
 export function Login() {
   const [logInOption, setLogInOption] = useState(true)
   
