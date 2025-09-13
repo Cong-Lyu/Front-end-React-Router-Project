@@ -10,7 +10,11 @@ export async function onSuccess(response) {
   const result = await request.json()
   localStorage.setItem('googleJwt', result['googleJwt'])
   localStorage.setItem('myJwt', result['myJwt'])
-  console.log(result)
+
+  const params = new URLSearchParams(window.location.search)
+  const target = params.get('target')
+  if(target) {window.location.href = `/${target}`}
+  else {window.location.href = '/'}
 }
 
 export function onError() {
