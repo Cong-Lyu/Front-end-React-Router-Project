@@ -3,13 +3,13 @@ import './App.css'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import { Header } from './pages/userpages/Header.jsx'
 import { Login, action as logInAction} from './pages/userpages/login.jsx'
-import { Vip, Loader } from './pages/publicpages/Vip.jsx'
+import { Vip } from './pages/publicpages/Vip.jsx'
 import { SubHeader } from './pages/publicpages/subHeader.jsx'
 import { Videos, loader as videoLoader } from './pages/publicpages/Videos.jsx'
 import { CreationLeftBar } from './pages/userpages/creationLeftBar.jsx'
 import { CreationUpload, action as uploadAction, loader as creationLoader } from './pages/userpages/creationUpload.jsx'
 import { VideoPlaying } from './pages/publicpages/VideoPlaying.jsx'
-import { VipPayment } from './pages/publicpages/VipPayment.jsx'
+import { VipPayment, Loader as paymentLoader } from './pages/publicpages/VipPayment.jsx'
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -25,7 +25,7 @@ function App() {
 
       <Route path='vip' element={<Vip />} />
     </Route>
-    <Route path='premiumPayment' element={<VipPayment />}/>
+    <Route path='premiumPayment' loader={paymentLoader} element={<VipPayment />}/>
     <Route action={logInAction} path='/login' element={<Login />}/>
     <Route element={<CreationLeftBar />}>
       <Route loader={creationLoader} action={uploadAction} path='/creation' element={<CreationUpload />} /> 

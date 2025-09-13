@@ -8,31 +8,6 @@ import {
 } from '@heroicons/react/24/solid'
 import styles from './Vip.module.css'
 
-export async function Loader() {
-  const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
-  const googleJwt = localStorage.getItem('googleJwt')
-  const myJwt = localStorage.getItem('myJwt')
-  try {
-    const varify = await fetch(`${url}/api/jwt/jwtVarify`, {
-      // credentials: 'include',
-      method: 'GET',
-      headers: {
-        'X-Google-Jwt': googleJwt,
-        'X-My-Jwt': myJwt
-      }
-    })
-    const result = await varify.json()
-    console.log(result)
-    if(!result['status']) {
-      throw redirect('/login')
-    }
-  }
-  catch(err) {
-    console.log(err)
-    throw redirect('/login')
-  }
-}
-
 export function Vip() {
   return (
     <>

@@ -1,15 +1,38 @@
-import { Form, useLocation, Link } from "react-router-dom"
+import { Form, useLocation, Link, redirect } from "react-router-dom"
 import { CardElement, Elements, useStripe, useElements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 import { useState } from "react"
 import styles from './VipPayment.module.css'
 import { getFormattedDate } from '../../util/getDateByMonth.js'
 
+export async function Loader() {
+  const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
+  const googleJwt = localStorage.getItem('googleJwt')
+  const myJwt = localStorage.getItem('myJwt')
+  try {
+    const varify = await fetch(`${url}/api/jwt/jwtVarify`, {
+      // credentials: 'include',
+      method: 'GET',
+      headers: {
+        'X-Google-Jwt': googleJwt,
+        'X-My-Jwt': myJwt
+      }
+    })
+    const result = await varify.json()
+    console.log(result)
+    if(!result['status']) {
+      throw redirect(`/login?target=${'Vip'}`)
+    }
+  }
+  catch(err) {
+    throw redirect(`/login?target=${'Vip'}`)
+  }
+}
+
 export function VipPayment() {
-  const option = useLocation()
   const temp = new URLSearchParams(location.search)
+  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
   
-  const stripePromise = loadStripe('pk_test_你的测试Key')
   return (
     <Elements stripe={stripePromise}>
       <Checkout option = {temp.get('option')}/>
@@ -22,9 +45,50 @@ function Checkout(props) {
   const plans = ['Yourself-only', 'Family-set', 'Two-people', 'Student-plan']
   const amount = [1599, 3899, 2499, 999]
   const [length, setLength] = useState(1)
+  const stripe = useStripe()
+  const elements = useElements()
   
   function handleAdd() {setLength(length + 1)}
   function handleSub() {if(length - 1 === 0) {alert('The minimum length is 1 month.')} else {setLength(length - 1)}}
+  async function onSubmit(e) {
+    try {
+      e.preventDefault()
+      const card = elements.getElement(CardElement)
+      const { error, paymentMethod } = await stripe.createPaymentMethod({type: "card", card})
+      if (error) {alert(error.message); return}
+      const googleJwt = localStorage.getItem('googleJwt')
+      const myJwt = localStorage.getItem('myJwt')
+      const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
+      const body = {
+        'start-date': getFormattedDate(0), 
+        'end-date': getFormattedDate(length), 
+        'length': length, 
+        'premiumType': plans[option],
+        'paymentId': paymentMethod.id,
+        'returnUrl': window.location.origin
+      }
+      const request = await fetch(url + `/api/premium/payment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Google-Jwt': googleJwt,
+          'X-My-Jwt': myJwt
+        },
+        body: JSON.stringify(body)
+      })
+      const result = await request.json()
+      console.log(result['payment-status'])
+      if(result['payment-status']) {
+        localStorage.setItem('googleJwt', result['googleJwt'])
+        localStorage.setItem('myJwt', result['myJwt'])
+        window.location.href = '/'
+      }
+      else {alert(result['error'])}
+    }
+    catch(err) {
+      console.log(err)
+    }
+  }
 
   return (
     <>
@@ -58,9 +122,9 @@ function Checkout(props) {
             <button className={styles.adjustButton} onClick={handleAdd}>+</button>
           </div>
         </div>
-        <Form className={styles.form} >
+        <Form onSubmit={onSubmit} className={styles.form} >
           <h2 className={styles.paymentTitle} >Complete your payment</h2>
-          <CardElement options={{style: { base: { fontSize: '16px', color: '#32325d' } }}}/>
+          <CardElement options={{style: { base: { fontSize: '16px', color: '#32325d' }}, disableLink: true}} />
           <div className={styles.formButtons} >
             <Link to='/Vip' className={styles.cancelLink} >cancel payment</Link>
             <button className={styles.submitButton} >Confirm</button>
@@ -68,6 +132,5 @@ function Checkout(props) {
         </Form>
       </main>
     </>
-    
   )
 }
