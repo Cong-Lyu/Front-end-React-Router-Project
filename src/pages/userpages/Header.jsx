@@ -10,15 +10,9 @@ import {
   StarIcon,
   ClockIcon,
   LightBulbIcon,
-  ArrowUpTrayIcon
+  ArrowUpTrayIcon,
+  GiftTopIcon
 } from '@heroicons/react/24/solid'
-
-// export function Loader() {
-//   const isLoggedIn = false
-//   if(!isLoggedIn) {
-//     throw redirect('/login')
-//   }
-// }
 
 export function Header() {
   return (
@@ -61,6 +55,11 @@ export function Header() {
             <div className={styles.subContainer}>
               <Link to='vip'>
                 <GiftIcon className={styles.icon}/>
+              </Link>
+            </div>
+            <div className={styles.subContainer}>
+              <Link to='premiumVideos'>
+                <GiftTopIcon className={styles.icon}/>
               </Link>
             </div>
             <div className={styles.subContainer}>
