@@ -10,6 +10,7 @@ import { CreationLeftBar } from './pages/userpages/creationLeftBar.jsx'
 import { CreationUpload, action as uploadAction, loader as creationLoader } from './pages/userpages/creationUpload.jsx'
 import { VideoPlaying } from './pages/publicpages/VideoPlaying.jsx'
 import { VipPayment, Loader as paymentLoader } from './pages/publicpages/VipPayment.jsx'
+import { PremiumVideos } from './pages/publicpages/PremiumVideos.jsx'
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -24,6 +25,7 @@ function App() {
       </Route>
 
       <Route path='vip' element={<Vip />} />
+      <Route path='premiumVideos' loader={videoLoader} element={<PremiumVideos />} />
     </Route>
     <Route path='premiumPayment' loader={paymentLoader} element={<VipPayment />}/>
     <Route path='/login' element={<Login />}/>
