@@ -21,11 +21,11 @@ export async function Loader() {
     const result = await varify.json()
     console.log(result)
     if(!result['status']) {
-      throw redirect(`/login?target=${'Vip'}`)
+      throw redirect(`/login?target=${'vip'}`)
     }
   }
   catch(err) {
-    throw redirect(`/login?target=${'Vip'}`)
+    throw redirect(`/login?target=${'vip'}`)
   }
 }
 
