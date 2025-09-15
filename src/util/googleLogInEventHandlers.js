@@ -11,10 +11,7 @@ export async function onSuccess(response) {
   localStorage.setItem('googleJwt', result['googleJwt'])
   localStorage.setItem('myJwt', result['myJwt'])
 
-  const params = new URLSearchParams(window.location.search)
-  const target = params.get('target')
-  if(target) {window.location.href = `/${target}`}
-  else {window.location.href = '/'}
+  window.location.reload()
 }
 
 export function onError() {

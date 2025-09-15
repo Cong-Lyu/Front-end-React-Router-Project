@@ -1,5 +1,6 @@
 import styles from './Header.module.css'
-import { Form, Link, Outlet, redirect } from 'react-router-dom'
+import { Form, Link, Outlet, useLoaderData } from 'react-router-dom'
+import { useState } from 'react'
 import { 
   AcademicCapIcon, 
   ArrowDownTrayIcon, 
@@ -11,10 +12,30 @@ import {
   ClockIcon,
   LightBulbIcon,
   ArrowUpTrayIcon,
-  GiftTopIcon
+  GiftTopIcon, 
+  XMarkIcon
 } from '@heroicons/react/24/solid'
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { onSuccess, onError } from '../../util/googleLogInEventHandlers.js'
 
 export function Header() {
+  const isLoggedIn = useLoaderData()
+  
+  return (
+    <>
+      <HeaderElems isLoggedIn={isLoggedIn} />
+      <Outlet />
+    </>
+  )
+}
+
+function HeaderElems(props) {
+  const isLoggedIn = props.isLoggedIn
+  const [showLogIn, setShowLogIn] = useState(false)
+  function showLogInElems() {if(!isLoggedIn) {setShowLogIn(true)}}
+  function closeLogInElems() {if(isLoggedIn) {setShowLogIn(false)}}
+  function clearUser() {if(isLoggedIn) {localStorage.clear(); window.location.reload()}}
+
   return (
     <>
       <header className={styles.header}>
@@ -51,7 +72,9 @@ export function Header() {
             </button>
           </Form>
           <div className={styles.rightContainer}>
-            <Link to='/login' className={styles.logInButton}>log in</Link>
+            {isLoggedIn 
+            ? <button onClick={clearUser} className={styles.logOutButton}>log out</button> 
+            : <button onClick={showLogInElems} className={styles.logInButton}>log in</button>}
             <div className={styles.subContainer}>
               <Link to='vip'>
                 <GiftIcon className={styles.icon}/>
@@ -94,7 +117,16 @@ export function Header() {
           </div>
         </div>
       </header>
-      <Outlet />
+      {showLogIn && 
+      <div className={styles.logInCover} >
+        <div className={styles.logInWindow} >
+          <button className={styles.logInWindowClose} onClick={closeLogInElems} ><XMarkIcon /></button>
+            <h2 style={{marginTop: '50px'}} >Select your way</h2>
+            <GoogleOAuthProvider clientId="921371467501-6a2oag4udjf0a2u1db7a4n7teuk26q63.apps.googleusercontent.com" locale="en">
+              <GoogleLogin onSuccess={onSuccess} onError={onError} size='medium' />
+            </GoogleOAuthProvider>         
+        </div>
+      </div>}
     </>
   )
 }
