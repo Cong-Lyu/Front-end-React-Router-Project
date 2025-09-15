@@ -122,6 +122,47 @@
   justify-self: center;
   align-self: center;
 }
-.qAndA {
 
+.logInCover {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  align-items: center;
+  justify-content: center;
+}
+.logInWindow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  height: 350px;
+  background: white;
+  border-radius: 50px;
+  padding: 40px 40px;
+  align-items: center;
+}
+.logInWindowClose {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  border: none;
+  background-color: orange;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.logInWindowClose:active {
+  opacity: 0.4;
+}
+.logInOptions {
+  display: flex;
+  flex-direction: column;
 }

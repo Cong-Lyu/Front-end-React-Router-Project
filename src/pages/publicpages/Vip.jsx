@@ -1,22 +1,32 @@
-import { Link, redirect } from 'react-router-dom'
+import { Link, redirect, useLoaderData } from 'react-router-dom'
+import { useState } from 'react'
 import { 
   AcademicCapIcon,
   UserPlusIcon,
   UserIcon,
   CheckCircleIcon,
-  XCircleIcon
+  XCircleIcon,
+  XMarkIcon
 } from '@heroicons/react/24/solid'
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { onSuccess, onError } from '../../util/googleLogInEventHandlers.js'
 import styles from './Vip.module.css'
 
 export function Vip() {
+  const isLoggedIn = useLoaderData()
+  
   return (
     <>
-      <VipPageElements />
+      <VipPageElements isLoggedIn={isLoggedIn} />
     </>
   )
 }
 
-function VipPageElements() {
+function VipPageElements(props) {
+  const isLoggedIn = props.isLoggedIn
+  const [showLogIn, setShowLogIn] = useState(false)
+  function showLogInElems(e) {if(!isLoggedIn) {setShowLogIn(true); e.preventDefault()}}
+  function closeLogInElems() {if(showLogIn) {setShowLogIn(false)}}
 
   return (
     <>
@@ -39,7 +49,7 @@ function VipPageElements() {
               <p className={styles.des} >1 month free trial</p>
               <p className={styles.des} style={{marginBottom: '30px'}} >policies apply</p>
               <button className={styles.tryButton2} >Try 1 month for free</button>
-              <Link to={`/premiumPayment?option=${0}`} className={styles.paymentLink} >Pick this option</Link>
+              <Link to={`/premiumPayment?option=${0}`} onClick={showLogInElems} className={styles.paymentLink} >Pick this option</Link>
             </div>
             <div className={styles.options} >
               <div className={styles.optionSubTitle} ><UserPlusIcon className={styles.icon2} style={{marginRight: '10px'}} />Family-set</div>
@@ -48,7 +58,7 @@ function VipPageElements() {
               <p className={styles.des} >1 month free trial</p>
               <p className={styles.des} style={{marginBottom: '30px'}} >policies apply</p>
               <button className={styles.tryButton2} >Try 1 month for free</button>
-              <Link to={`/premiumPayment?option=${1}`} className={styles.paymentLink} >Pick this option</Link>
+              <Link to={`/premiumPayment?option=${1}`} onClick={showLogInElems} className={styles.paymentLink} >Pick this option</Link>
             </div>
             <div className={styles.options} >
               <div className={styles.optionSubTitle} ><UserPlusIcon className={styles.icon2} style={{marginRight: '10px'}} />Two-people</div>
@@ -57,7 +67,7 @@ function VipPageElements() {
               <p className={styles.des} >1 month free trial</p>
               <p className={styles.des} style={{marginBottom: '30px'}} >policies apply</p>
               <button className={styles.tryButton2} >Try 1 month for free</button>
-              <Link to={`/premiumPayment?option=${2}`} className={styles.paymentLink} >Pick this option</Link>
+              <Link to={`/premiumPayment?option=${2}`} onClick={showLogInElems} className={styles.paymentLink} >Pick this option</Link>
             </div>
             <div className={styles.options} >
               <div className={styles.optionSubTitle} ><AcademicCapIcon className={styles.icon2} style={{marginRight: '10px'}} />Student-plan</div>
@@ -66,7 +76,7 @@ function VipPageElements() {
               <p className={styles.des} >1 month free trial</p>
               <p className={styles.des} style={{marginBottom: '30px'}} >policies apply</p>
               <button className={styles.tryButton2} >Try 1 month for free</button>
-              <Link to={`/premiumPayment?option=${3}`} className={styles.paymentLink} >Pick this option</Link>
+              <Link to={`/premiumPayment?option=${3}`} onClick={showLogInElems} className={styles.paymentLink} >Pick this option</Link>
             </div>
           </div>
         </div>
@@ -114,6 +124,16 @@ function VipPageElements() {
           </details>
         </div>
       </main>
+      {showLogIn && 
+      <div className={styles.logInCover} >
+        <div className={styles.logInWindow} >
+          <button className={styles.logInWindowClose} onClick={closeLogInElems} ><XMarkIcon /></button>
+          <h2 style={{marginTop: '50px'}} >Select your way</h2>
+          <GoogleOAuthProvider clientId="921371467501-6a2oag4udjf0a2u1db7a4n7teuk26q63.apps.googleusercontent.com" locale="en">
+            <GoogleLogin onSuccess={onSuccess} onError={onError} size='medium' />
+          </GoogleOAuthProvider>         
+        </div>
+      </div>}
     </>
   )
 }
