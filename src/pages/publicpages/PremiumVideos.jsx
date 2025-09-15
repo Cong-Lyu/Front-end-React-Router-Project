@@ -43,7 +43,7 @@ function PremiumVideoList(props) {
     const picList = []
     for(let i = 0; i < nums; i++) {
       picList.push(
-      <Link to={`/video?videoName=testVideo1`} className={styles.container} >
+      <Link to={`/premiumVideoPlaying?premiumVideoName=testPremiumVideo1`} className={styles.container} >
         <img loading="lazy" className={styles.videoImg} src={generalPicPath + list[i]} />
         
         <p >This is the description part</p>
