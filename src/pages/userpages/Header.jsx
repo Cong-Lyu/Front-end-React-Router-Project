@@ -33,7 +33,7 @@ function HeaderElems(props) {
   const isLoggedIn = props.isLoggedIn
   const [showLogIn, setShowLogIn] = useState(false)
   function showLogInElems() {if(!isLoggedIn) {setShowLogIn(true)}}
-  function closeLogInElems() {if(isLoggedIn) {setShowLogIn(false)}}
+  function closeLogInElems() {if(showLogIn) {setShowLogIn(false)}}
   function clearUser() {if(isLoggedIn) {localStorage.clear(); window.location.reload()}}
 
   return (
