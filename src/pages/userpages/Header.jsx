@@ -52,7 +52,7 @@ function HeaderElems(props) {
               <p>games</p>
             </Link>
             <Link className={styles.prompt}>
-              <p>vip column</p>
+              <p>premium column</p>
             </Link>
             <Link className={styles.prompt}>
               <p>anime</p>
@@ -76,7 +76,7 @@ function HeaderElems(props) {
             ? <button onClick={clearUser} className={styles.logOutButton}>log out</button> 
             : <button onClick={showLogInElems} className={styles.logInButton}>log in</button>}
             <div className={styles.subContainer}>
-              <Link to='vip'>
+              <Link to='premium'>
                 <GiftIcon className={styles.icon}/>
               </Link>
             </div>
