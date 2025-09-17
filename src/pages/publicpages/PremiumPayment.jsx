@@ -1,8 +1,8 @@
-import { Form, useLocation, Link, redirect } from "react-router-dom"
+import { Form, Link } from "react-router-dom"
 import { CardElement, Elements, useStripe, useElements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 import { useState } from "react"
-import styles from './VipPayment.module.css'
+import styles from './PremiumPayment.module.css'
 import { getFormattedDate } from '../../util/getDateByMonth.js'
 
 export async function Loader() {
@@ -28,7 +28,7 @@ export async function Loader() {
   }
 }
 
-export function VipPayment() {
+export function PremiumPayment() {
   const temp = new URLSearchParams(location.search)
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
   
@@ -125,7 +125,7 @@ function Checkout(props) {
           <h2 className={styles.paymentTitle} >Complete your payment</h2>
           <CardElement options={{style: { base: { fontSize: '16px', color: '#32325d' }}, disableLink: true}} />
           <div className={styles.formButtons} >
-            <Link to='/Vip' className={styles.cancelLink} >cancel payment</Link>
+            <Link to='/premium' className={styles.cancelLink} >cancel payment</Link>
             <button className={styles.submitButton} >Confirm</button>
           </div>
         </Form>

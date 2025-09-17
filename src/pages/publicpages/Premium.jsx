@@ -10,19 +10,19 @@ import {
 } from '@heroicons/react/24/solid'
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { onSuccess, onError } from '../../util/googleLogInEventHandlers.js'
-import styles from './Vip.module.css'
+import styles from './Premium.module.css'
 
-export function Vip() {
+export function Premium() {
   const isLoggedIn = useLoaderData()
   
   return (
     <>
-      <VipPageElements isLoggedIn={isLoggedIn} />
+      <PremiumPageElements isLoggedIn={isLoggedIn} />
     </>
   )
 }
 
-function VipPageElements(props) {
+function PremiumPageElements(props) {
   const isLoggedIn = props.isLoggedIn
   const [showLogIn, setShowLogIn] = useState(false)
   function showLogInElems(e) {if(!isLoggedIn) {setShowLogIn(true); e.preventDefault()}}

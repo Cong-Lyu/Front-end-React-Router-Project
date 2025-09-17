@@ -95,7 +95,7 @@ export function PremiumVideoPlaying() {
             <h2 className={styles.promptTitle} >This is for premium user only</h2>
             <p style={{marginBottom: '40px'}} >Would you like to change to premium plan?</p>
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-              <Link to="/vip" className={styles.upgradeLink} >Upgrade to premium</Link>
+              <Link to="/premium" className={styles.upgradeLink} >Upgrade to premium</Link>
               <Link to="/" className={styles.homeLink} >Back to home</Link>
             </div>
           </div>
