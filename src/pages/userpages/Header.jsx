@@ -1,5 +1,5 @@
 import styles from './Header.module.css'
-import { Form, Link, Outlet, useLoaderData } from 'react-router-dom'
+import { Form, Link, Outlet, useLoaderData, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { 
   AcademicCapIcon, 
@@ -13,7 +13,8 @@ import {
   LightBulbIcon,
   ArrowUpTrayIcon,
   GiftTopIcon, 
-  XMarkIcon
+  XMarkIcon,
+  UserCircleIcon
 } from '@heroicons/react/24/solid'
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { onSuccess, onError } from '../../util/googleLogInEventHandlers.js'
@@ -32,9 +33,27 @@ export function Header() {
 function HeaderElems(props) {
   const isLoggedIn = props.isLoggedIn
   const [showLogIn, setShowLogIn] = useState(false)
+  const navigate = useNavigate()
   function showLogInElems() {if(!isLoggedIn) {setShowLogIn(true)}}
   function closeLogInElems() {if(showLogIn) {setShowLogIn(false)}}
   function clearUser() {if(isLoggedIn) {localStorage.clear(); window.location.reload()}}
+  async function checkLogInStatus(e) {
+    e.preventDefault()
+    const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
+    const googleJwt = localStorage.getItem('googleJwt')
+    const myJwt = localStorage.getItem('myJwt')
+    const isLoggedIn = await fetch(`${url}/api/jwt/jwtVarify`, {
+      // credentials: 'include',
+      method: 'GET',
+      headers: {
+        'X-Google-Jwt': googleJwt,
+        'X-My-Jwt': myJwt
+      }
+    })
+    const status = await isLoggedIn.json()
+    if(!status['status']) {setShowLogIn(true)}
+    else {navigate('userPage')}
+  }
 
   return (
     <>
@@ -75,6 +94,11 @@ function HeaderElems(props) {
             {isLoggedIn 
             ? <button onClick={clearUser} className={styles.logOutButton}>log out</button> 
             : <button onClick={showLogInElems} className={styles.logInButton}>log in</button>}
+            <div className={styles.subContainer}>
+              <Link onClick={checkLogInStatus} to='userPage'>
+                <UserCircleIcon className={styles.icon}/>
+              </Link>
+            </div>
             <div className={styles.subContainer}>
               <Link to='premium'>
                 <GiftIcon className={styles.icon}/>
