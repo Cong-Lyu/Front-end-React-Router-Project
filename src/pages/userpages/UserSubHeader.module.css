@@ -1,0 +1,58 @@
+.subHeader {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 60px;
+  font-family: Roboto;
+  border-bottom: 1px solid rgb(213, 210, 210);
+}
+
+.upperContainer {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  height: 100px;
+  gap: 20px;
+}
+
+.userProfileImg {
+  width: 90px;
+  height: 90px;
+  border-radius: 70px;
+  object-fit: cover;
+}
+.userName {
+  margin: 0;
+}
+.premiumIcon {
+  width: 40px;
+  height: 40px;
+  color: orange;
+}
+
+.lowerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leftContainer {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+}
+.userSubHeaderLink {
+  text-decoration: none;
+  color: black;
+}
+
+.rightContainer {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+}
+
+.followAndLike {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
