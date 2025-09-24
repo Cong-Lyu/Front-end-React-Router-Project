@@ -1,12 +1,76 @@
 .main {
-  padding-left: 20px;
-  padding-top: 20px;
-  margin-left: 140px;
-  margin-top: 60px;
-  background-color: grey;
-  height: 1000px;
+  margin: 50px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .mainContent {
   height: 1000px;
   background-color: white;
+}
+
+.uploadContainer {
+  margin-bottom: 30px;
+  padding: 140px 300px;
+  border: 1px, dashed, grey;
+  cursor: pointer;
+  background: rgb(253, 253, 253);
+  font-size: 26px;
+  transition: 0.15s;
+}
+.uploadContainer:hover {
+  opacity: 0.4;
+}
+.uploadContainer:active {
+  opacity: 0.4;
+}
+.uploadContainerDisabled {
+  margin-bottom: 30px;
+  padding: 140px 300px;
+  border: 1px, dashed, grey;
+  cursor: pointer;
+  background: rgb(253, 253, 253);
+  font-size: 26px;
+  cursor: default;
+  opacity: 1;
+}
+.uploadContainerDisabled:hover {
+  opacity: 1;
+}
+
+.uploadButton {
+  padding: 10px 20px;
+  transition: 0.15s;
+  cursor: pointer;
+  margin-bottom: 30px;
+  /* background-color: #065fd4; */
+  background-color: orange;
+  border-radius: 20px;
+  border: none;
+  color: black;
+}
+.uploadButton:hover {
+  opacity: 0.8;
+}
+.uploadButton:active {
+  opacity: 0.4;
+} 
+
+.instance {
+  padding: 40px 40px;
+  background-color: #065fd4;
+  color: white;
+  position: relative;
+  border-radius: 20px;
+}
+.deleteInstance {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #065fd4;
+  color: white;
+  border: none;
+  z-index: 10;
 }
