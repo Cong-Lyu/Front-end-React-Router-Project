@@ -37,7 +37,7 @@
 
 .leftContainer {
   display: flex;
-  width: 400px;
+  width: 600px;
   justify-content: space-between;
 }
 .userSubHeaderLink {

@@ -130,11 +130,11 @@ function HeaderElems(props) {
               </Link>
             </div>
             <div className={styles.subContainer}>
-              <Link to='/creation'>
+              <Link >
                 <LightBulbIcon className={styles.icon}/>
               </Link>
             </div>
-            <Link className={styles.uploadContainer}>
+            <Link to='upload' className={styles.uploadContainer}>
               <ArrowUpTrayIcon className={styles.icon}/>
               <p>upload</p>
             </Link>

@@ -59,6 +59,7 @@ function UserSubHeaderElems(props) {
             <NavLink to='https://google.com' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >my videos</NavLink>
             <NavLink to='https://google.com' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >liked videos</NavLink>
             <NavLink to='https://google.com' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >settings</NavLink>
+            <NavLink to='upload' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >upload my video</NavLink>
           </div>
           <div className={styles.rightContainer} >
             <div className={styles.followAndLike} >
