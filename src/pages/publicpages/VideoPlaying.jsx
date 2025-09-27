@@ -1,7 +1,7 @@
 import videojs from "video.js"
 import 'video.js/dist/video-js.css'
 import { useRef, useEffect, useState } from "react"
-import { useLoaderData, Link } from "react-router-dom"
+import { useLoaderData, Link, useLocation } from "react-router-dom"
 import 'videojs-youtube'
 import { 
   PlayIcon,
@@ -11,6 +11,11 @@ import {
 import styles from './VideoPlaying.module.css'
 
 export function VideoPlaying() {
+  const location = useLocation() 
+  const searchParams = new URLSearchParams(location.search) 
+  const videoId = searchParams.get('videoId')  
+  console.log(videoId)
+  
   const firstList = useLoaderData()
   const [list, setList] = useState(firstList)
   const lastPicName = list[list.length - 1]
@@ -38,7 +43,7 @@ export function VideoPlaying() {
     <>
       <main className={styles.main}>
         <div className={styles.leftContainer} >
-          <h1 className={styles.videoTitle} >鄭融《終生學習》</h1>
+          <h1 className={styles.videoTitle} >{videoId ? videoId : `鄭融《終生學習》`}</h1>
           <div className={styles.titleContainer} >
             <PlayIcon className={styles.Icon} />
             <p className={styles.videoInfo} style={{ marginRight: '8px'}}>845K</p>
@@ -46,7 +51,7 @@ export function VideoPlaying() {
             <NoSymbolIcon className={styles.Icon} />
             <p className={styles.videoInfo} >Do not share without permission</p>
           </div>
-          <VideoElem />
+          <VideoElem videoId={videoId} />
           <div className={styles.interactionBar} >
             <button className={styles.likeButton} >
               <HandThumbUpIcon className={styles.likeIcon} />
@@ -77,7 +82,13 @@ function SubVideoList(props) {
     const picList = []
     for(let i = 0; i < nums; i++) {
       picList.push(
-      <Link to={`/video?videoName=testVideo1`} className={styles.subVideoContainer} >
+      <Link 
+        to={`/video?videoName=testVideo1`} 
+        onClick={(e) => {
+          e.preventDefault()
+          window.location.href = `/video?videoName=testVideo1`
+        }}
+        className={styles.subVideoContainer} >
         <div><img loading="lazy" className={styles.subVideoListImg} src={generalPicPath + list[i]} /></div>
         <div><p>This is the description part1</p><p>This is part2</p></div>
       </Link>)
@@ -92,10 +103,12 @@ function SubVideoList(props) {
   )
 }
 
-function VideoElem() {
+function VideoElem(props) {
+  const videoId = props.videoId
+  console.log(videoId)
   const videoRef = useRef(null)
   const playRef = useRef(null)
-  const videoSrc = 'https://www.youtube.com/watch?v=cBvtC5qPac0'
+  const videoSrc = videoId ? `https://shirahama-videos.s3.ap-southeast-2.amazonaws.com/${videoId}` : 'https://www.youtube.com/watch?v=cBvtC5qPac0'
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -105,9 +118,9 @@ function VideoElem() {
           autoplay: false,
           preload: 'auto',
           fluid: true,
-          techOrder: ['youtube'],
+          techOrder: videoId ?  ['html5'] : ['youtube'],
           sources: [{
-            type: 'video/youtube',
+            type: videoId ? 'video/mp4' : 'video/youtube',
             src: videoSrc
           }],
           youtube: {
