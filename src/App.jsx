@@ -11,6 +11,7 @@ import { PremiumVideos } from './pages/publicpages/PremiumVideos.jsx'
 import { PremiumVideoPlaying, Loader as premiumVideoLoader } from './pages/userpages/PremiumVideoPlaying.jsx'
 import { UserSubHeader, Loader as userPageLoader } from './pages/userpages/UserSubHeader.jsx'
 import { UserPage } from './pages/userpages/UserPage.jsx'
+import { MyVideos, loader as userIdLoader  } from './pages/userpages/MyVideos.jsx'
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -26,7 +27,8 @@ function App() {
 
       <Route loader={userPageLoader} element={<UserSubHeader />}>
         <Route path='userPage' element={<UserPage />} />
-        <Route path='upload' element={<CreationUpload />} /> 
+        <Route path='upload' element={<CreationUpload />} />
+        <Route path='myVideos' loader={userIdLoader} element={<MyVideos />} />
       </Route>
       <Route path='premiumVideoPlaying' loader={premiumVideoLoader} element={<PremiumVideoPlaying />} />
       <Route path='premium' loader={paymentLoader} element={<Premium />} />

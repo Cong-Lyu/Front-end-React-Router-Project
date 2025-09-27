@@ -56,7 +56,7 @@ function UserSubHeaderElems(props) {
         <div className={styles.lowerContainer} >
           <div className={styles.leftContainer} >
             <NavLink to='https://google.com' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >Home</NavLink>
-            <NavLink to='https://google.com' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >my videos</NavLink>
+            <NavLink to='myVideos' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >my videos</NavLink>
             <NavLink to='https://google.com' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >liked videos</NavLink>
             <NavLink to='https://google.com' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >settings</NavLink>
             <NavLink to='upload' style={({isActive}) => ({color: isActive ? 'orange' : 'black'})} className={styles.userSubHeaderLink} >upload my video</NavLink>
