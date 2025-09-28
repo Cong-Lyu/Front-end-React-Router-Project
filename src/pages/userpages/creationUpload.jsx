@@ -18,12 +18,13 @@ function UploadElems() {
     try {
       const fileType = inputRef.current.files[0].type
       const fileSize = inputRef.current.files[0].size
-      const credential = await getUploadCredential(fileType)
+      const [credential, videoId] = await getUploadCredential(fileType)
+
       if(credential) {
         uploadRef.current.disabled = true
         const uploadStatus = await uploadVideo(credential, inputRef.current.files[0], fileType)
         if(uploadStatus) {
-          const insertion =  await insertRecord(fileType, fileSize)
+          const insertion =  await insertRecord(videoId, fileType, fileSize)
           if(insertion) {alert('Upload successful!'); window.location.reload()}
           else {throw new Error('try again later!')}
         }
