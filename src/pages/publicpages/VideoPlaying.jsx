@@ -117,7 +117,9 @@ function VideoElem(props) {
           controls: true,
           autoplay: false,
           preload: 'auto',
-          fluid: true,
+          fluid: false,
+          width: 900,    
+          height: 506,
           techOrder: videoId ?  ['html5'] : ['youtube'],
           sources: [{
             type: videoId ? 'video/mp4' : 'video/youtube',
