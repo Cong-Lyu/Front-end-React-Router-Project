@@ -75,7 +75,7 @@ function EmptyPrompt() {
     <>
       <div className={styles.emptyContainer} >
         <div className={styles.emptyImgContainer} >
-          <img className={styles.emptyImg} src='../../../public/empty.jpg' />
+          <img className={styles.emptyImg} src='/empty.jpg' />
           <p className={styles.emptyPrompt} >Waiting for your video......</p>
           <Link to='/upload' className={styles.uploadPrompt} >Upload Now</Link>
         </div>
