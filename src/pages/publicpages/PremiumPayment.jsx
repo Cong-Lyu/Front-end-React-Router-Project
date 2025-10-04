@@ -20,7 +20,7 @@ export async function Loader() {
     })
     const result = await varify.json()
     console.log(result)
-    if(!result['status']) {return false}
+    if(!result['status']) {console.log(result['error']); return false}
     return true
   }
   catch(err) {
