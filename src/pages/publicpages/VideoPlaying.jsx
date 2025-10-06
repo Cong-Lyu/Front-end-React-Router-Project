@@ -13,8 +13,9 @@ import styles from './VideoPlaying.module.css'
 export function VideoPlaying() {
   const location = useLocation() 
   const searchParams = new URLSearchParams(location.search) 
-  const videoId = searchParams.get('videoId')  
-  console.log(videoId)
+  const videoId = searchParams.get('videoId')
+  const videoTitle = searchParams.get('videoTitle')  
+  console.log(videoId, videoTitle)
   
   const firstList = useLoaderData()
   const [list, setList] = useState(firstList)
@@ -43,7 +44,7 @@ export function VideoPlaying() {
     <>
       <main className={styles.main}>
         <div className={styles.leftContainer} >
-          <h1 className={styles.videoTitle} >{videoId ? videoId : `鄭融《終生學習》`}</h1>
+          <h1 className={styles.videoTitle} >{videoTitle ? videoTitle : `鄭融《終生學習》`}</h1>
           <div className={styles.titleContainer} >
             <PlayIcon className={styles.Icon} />
             <p className={styles.videoInfo} style={{ marginRight: '8px'}}>845K</p>

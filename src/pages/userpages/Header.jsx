@@ -134,7 +134,7 @@ function HeaderElems(props) {
                 <LightBulbIcon className={styles.icon}/>
               </Link>
             </div>
-            <Link to='upload' className={styles.uploadContainer}>
+            <Link to='upload' onClick={checkLogInStatus} className={styles.uploadContainer}>
               <ArrowUpTrayIcon className={styles.icon}/>
               <p>upload</p>
             </Link>
