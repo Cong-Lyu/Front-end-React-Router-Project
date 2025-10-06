@@ -14,17 +14,19 @@ function UploadElems() {
   const [videoName, setVideoName] = useState(null)
   const inputRef = useRef()
   const uploadRef = useRef()
+  const titleInput = useRef()
   async function submitVideo() {
     try {
       const fileType = inputRef.current.files[0].type
       const fileSize = inputRef.current.files[0].size
+      const videoTitle = titleInput.current.value
       const [credential, videoId] = await getUploadCredential(fileType)
 
       if(credential) {
         uploadRef.current.disabled = true
         const uploadStatus = await uploadVideo(credential, inputRef.current.files[0], fileType)
         if(uploadStatus) {
-          const insertion =  await insertRecord(videoId, fileType, fileSize)
+          const insertion = await insertRecord(videoId, fileType, fileSize, videoTitle)
           if(insertion) {alert('Upload successful!'); window.location.reload()}
           else {throw new Error('try again later!')}
         }
@@ -58,6 +60,13 @@ function UploadElems() {
             }} 
             style={{display: "none"}} />
         </label>
+        <label className={styles.videoTitleContainer} >
+          <div className={styles.titlePrompt} >
+            Enter your video title here
+          </div>
+          <input ref={titleInput} type='text' className={styles.videoTitle} />
+        </label>
+        
         <button ref={uploadRef} onClick={submitVideo} disabled={!videoName} className={styles.uploadButton} >Upload</button>
       </main>
     </>
