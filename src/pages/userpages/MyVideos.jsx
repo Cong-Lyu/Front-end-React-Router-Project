@@ -44,7 +44,7 @@ function MyVideosList(props) {
     const picList = []
     for(let i = 0; i < nums; i++) {
       picList.push(
-      <Link to={`/video?videoId=${videoList[i]}`} className={styles.container} >
+      <Link to={`/video?videoId=${videoList[i][0]}&videoTitle=${videoList[i][1]}`} className={styles.container} >
         <img loading="lazy" className={styles.videoImg} src={generalPicPath + list[i]} />
         <div style={{marginLeft: '-50px'}} >
           <p className={styles.description} >This is the description part</p>
