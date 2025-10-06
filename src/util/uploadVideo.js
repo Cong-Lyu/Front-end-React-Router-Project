@@ -36,7 +36,7 @@ export async function uploadVideo(credential, file, fileType) {
   catch(err) {console.log(err); return false}
 }
 
-export async function insertRecord(videoId, fileType, fileSize) {
+export async function insertRecord(videoId, fileType, fileSize, videoTitle) {
   const googleJwt = localStorage.getItem('googleJwt')
   const myJwt = localStorage.getItem('myJwt')
   const url = import.meta.env.VITE_REACT_APP_API_URL || `http://localhost:5000`
@@ -46,7 +46,8 @@ export async function insertRecord(videoId, fileType, fileSize) {
     body: JSON.stringify({
       'fileType': fileType, 
       'fileSize': fileSize,
-      'videoId': videoId
+      'videoId': videoId,
+      'videoTitle': videoTitle 
     })
   })
   const insertResult = await insertion.json()
